@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍔 FastFood Delivery App
 
-## Getting Started
+A modern, responsive food delivery website built with **Next.js 16**, **TypeScript**, and **Tailwind CSS**.
 
-First, run the development server:
+![FastFood App](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-blue?logo=tailwind-css)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Live Demo
+
+Visit the app: [http://localhost:3000](http://localhost:3000)
+
+## ✨ Features
+
+- 📱 **Fully Responsive** - Works perfectly on mobile, tablet, and desktop
+- 🎨 **Modern UI** - Clean design with orange theme and smooth animations
+- 🔍 **Search & Filter** - Find restaurants by category (Pizza, Burgers, Sushi, etc.)
+- 🛒 **Shopping Cart** - Cart icon with item counter
+- 📊 **Restaurant Cards** - Display ratings, delivery time, and minimum order
+- 🔤 **TypeScript** - Fully typed for better development experience
+- ⚡ **Fast Performance** - Built with Next.js 16 and Turbopack
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Fonts**: Geist Sans & Geist Mono
+- **Icons**: Heroicons (SVG)
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/fastfood-delivery-app.git
+   cd fastfood-delivery-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx           # Root layout
+│   └── page.tsx             # Home page
+├── components/
+│   ├── Button.tsx           # Reusable button component
+│   ├── Card.tsx             # Card wrapper component
+│   ├── Input.tsx            # Input field component
+│   ├── Header.tsx           # Navigation header
+│   ├── Hero.tsx             # Hero section with search
+│   ├── Categories.tsx       # Category filter buttons
+│   ├── RestaurantGrid.tsx   # Restaurant cards grid
+│   └── Footer.tsx           # Footer section
+├── public/                  # Static assets
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Button
+Reusable button with 3 variants and 3 sizes:
+```tsx
+<Button variant="primary" size="lg">Order Now</Button>
+<Button variant="secondary" size="md">Learn More</Button>
+<Button variant="outline" size="sm">Cancel</Button>
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Restaurant Card
+Displays restaurant info with ratings and delivery details:
+- Restaurant name and cuisine type
+- Star rating with green badge
+- Delivery time and minimum order
+- Order button with hover effects
 
-## Learn More
+### Categories
+Interactive category filters:
+- All, Pizza, Burgers, Sushi, Desserts, Drinks
+- Active state with orange highlighting
+- Smooth animations
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Deployment
 
-## Deploy on Vercel
+### Deploy to Vercel (Recommended)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push your code to GitHub
+2. Visit [Vercel](https://vercel.com)
+3. Import your GitHub repository
+4. Deploy with one click!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Deploy to Netlify
+
+1. Build the project: `npm run build`
+2. Upload the `out` folder to Netlify
+
+## 🛣️ Roadmap
+
+### Phase 1: Core Features ✅
+- [x] Responsive design
+- [x] Restaurant grid
+- [x] Category filters
+- [x] Search functionality
+- [x] Shopping cart UI
+
+### Phase 2: Interactivity 🚧
+- [ ] Functional category filtering
+- [ ] Cart state management
+- [ ] Restaurant detail pages
+- [ ] Checkout process
+
+### Phase 3: Backend 🔄
+- [ ] API routes
+- [ ] Database integration
+- [ ] User authentication
+- [ ] Order management
+
+### Phase 4: Advanced 🚀
+- [ ] Real-time order tracking
+- [ ] Payment integration
+- [ ] Reviews and ratings
+- [ ] Push notifications
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Your Name**
+- GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
+
+## 🙏 Acknowledgments
+
+- [Next.js](https://nextjs.org/) for the amazing framework
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS
+- [Heroicons](https://heroicons.com/) for the beautiful icons
+- [Vercel](https://vercel.com/) for easy deployment
+
+---
+
+⭐ **Star this repository if you found it helpful!**
