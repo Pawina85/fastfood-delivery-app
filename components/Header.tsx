@@ -1,25 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs';
 import Button from './Button';
 import { useCart } from './CartContext';
+import { useUserProfile } from './UserContext';
 import CartDrawer from './CartDrawer';
 import CheckoutModal from './CheckoutModal';
 import OrderConfirmationModal from './OrderConfirmationModal';
+import UserProfileModal from './UserProfileModal';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { totalItems, openCart } = useCart();
-
-  const handleLogin = () => {
-    // TODO: Implement login functionality
-    alert('Login functionality - Coming Soon!');
-  };
-
-  const handleSignIn = () => {
-    // TODO: Implement sign in functionality
-    alert('Sign In functionality - Coming Soon!');
-  };
+  const { isSignedIn, isLoaded } = useUser();
+  const { openProfileModal } = useUserProfile();
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -51,8 +46,9 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Cart, Login & Sign In */}
+          {/* Cart & Auth */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Cart Button */}
             <button
               onClick={openCart}
               className="relative p-2 text-gray-700 hover:text-orange-500 transition-colors"
@@ -66,8 +62,37 @@ export default function Header() {
                 </span>
               )}
             </button>
-            <Button variant="secondary" size="sm" onClick={handleLogin}>Login</Button>
-            <Button variant="primary" size="sm" onClick={handleSignIn}>Sign In</Button>
+
+            {/* Auth Buttons */}
+            {!isLoaded ? (
+              <div className="w-20 h-8 bg-gray-200 rounded-full animate-pulse" />
+            ) : isSignedIn ? (
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={openProfileModal}
+                  className="text-gray-700 hover:text-orange-500 font-medium transition-colors text-sm"
+                >
+                  My Account
+                </button>
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: 'w-9 h-9',
+                    },
+                  }}
+                />
+              </div>
+            ) : (
+              <>
+                <SignInButton mode="modal">
+                  <Button variant="secondary" size="sm">Login</Button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <Button variant="primary" size="sm">Sign Up</Button>
+                </SignUpButton>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -111,20 +136,41 @@ export default function Header() {
                   </svg>
                   <span>Cart ({totalItems})</span>
                 </button>
-                <div className="flex items-center space-x-2">
-                  <Button variant="secondary" size="sm" onClick={handleLogin}>Login</Button>
-                  <Button variant="primary" size="sm" onClick={handleSignIn}>Sign In</Button>
-                </div>
+
+                {/* Mobile Auth */}
+                {!isLoaded ? (
+                  <div className="w-full h-8 bg-gray-200 rounded animate-pulse" />
+                ) : isSignedIn ? (
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={openProfileModal}
+                      className="text-gray-700 hover:text-orange-500 font-medium transition-colors"
+                    >
+                      My Account
+                    </button>
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <SignInButton mode="modal">
+                      <Button variant="secondary" size="sm">Login</Button>
+                    </SignInButton>
+                    <SignUpButton mode="modal">
+                      <Button variant="primary" size="sm">Sign Up</Button>
+                    </SignUpButton>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         )}
       </nav>
 
-      {/* Cart Flow Modals */}
+      {/* Modals */}
       <CartDrawer />
       <CheckoutModal />
       <OrderConfirmationModal />
+      <UserProfileModal />
     </header>
   );
 }
