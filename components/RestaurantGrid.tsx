@@ -1,5 +1,8 @@
+'use client';
+
 import Card from './Card';
 import Button from './Button';
+import { useCart } from './CartContext';
 
 interface Restaurant {
   id: number;
@@ -9,6 +12,8 @@ interface Restaurant {
   deliveryTime: string;
   minOrder: string;
   image: string;
+  popularItem: string;
+  price: number;
 }
 
 const restaurants: Restaurant[] = [
@@ -19,7 +24,9 @@ const restaurants: Restaurant[] = [
     rating: 4.8,
     deliveryTime: "20-30 min",
     minOrder: "$15",
-    image: "🍕"
+    image: "🍕",
+    popularItem: "Margherita Pizza",
+    price: 14.99,
   },
   {
     id: 2,
@@ -28,7 +35,9 @@ const restaurants: Restaurant[] = [
     rating: 4.6,
     deliveryTime: "25-35 min",
     minOrder: "$12",
-    image: "🍔"
+    image: "🍔",
+    popularItem: "Classic Cheeseburger",
+    price: 11.99,
   },
   {
     id: 3,
@@ -37,7 +46,9 @@ const restaurants: Restaurant[] = [
     rating: 4.9,
     deliveryTime: "30-40 min",
     minOrder: "$20",
-    image: "🍣"
+    image: "🍣",
+    popularItem: "Dragon Roll",
+    price: 18.99,
   },
   {
     id: 4,
@@ -46,7 +57,9 @@ const restaurants: Restaurant[] = [
     rating: 4.7,
     deliveryTime: "15-25 min",
     minOrder: "$10",
-    image: "🌮"
+    image: "🌮",
+    popularItem: "Carne Asada Tacos",
+    price: 9.99,
   },
   {
     id: 5,
@@ -55,7 +68,9 @@ const restaurants: Restaurant[] = [
     rating: 4.5,
     deliveryTime: "25-35 min",
     minOrder: "$12",
-    image: "🍜"
+    image: "🍜",
+    popularItem: "Spicy Ramen",
+    price: 12.99,
   },
   {
     id: 6,
@@ -64,11 +79,27 @@ const restaurants: Restaurant[] = [
     rating: 4.8,
     deliveryTime: "20-30 min",
     minOrder: "$8",
-    image: "🍰"
+    image: "🍰",
+    popularItem: "Chocolate Cake",
+    price: 7.99,
   },
 ];
 
 export default function RestaurantGrid() {
+  const { addItem, openCart } = useCart();
+
+  const handleOrderNow = (restaurant: Restaurant) => {
+    addItem({
+      id: `${restaurant.id}-${restaurant.popularItem}`,
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+      itemName: restaurant.popularItem,
+      price: restaurant.price,
+      image: restaurant.image,
+    });
+    openCart();
+  };
+
   return (
     <section className="py-16 bg-gray-50" id="restaurants">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,8 +154,12 @@ export default function RestaurantGrid() {
                     </div>
                   </div>
 
-                  <Button variant="primary" className="w-full mt-4">
-                    Order Now
+                  <Button
+                    variant="primary"
+                    className="w-full mt-4"
+                    onClick={() => handleOrderNow(restaurant)}
+                  >
+                    Order Now - ${restaurant.price.toFixed(2)}
                   </Button>
                 </div>
               </div>
