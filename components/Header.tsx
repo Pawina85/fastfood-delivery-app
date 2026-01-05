@@ -8,13 +8,11 @@ export default function Header() {
 
   const handleLogin = () => {
     // TODO: Implement login functionality
-    console.log('Login clicked');
     alert('Login functionality - Coming Soon!');
   };
 
   const handleSignIn = () => {
     // TODO: Implement sign in functionality
-    console.log('Sign In clicked');
     alert('Sign In functionality - Coming Soon!');
   };
 
