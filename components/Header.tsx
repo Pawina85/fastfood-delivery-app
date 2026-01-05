@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs';
+import { SignInButton, SignUpButton, UserButton, useUser } from './useClerkSafe';
 import Button from './Button';
 import { useCart } from './CartContext';
 import { useUserProfile } from './UserContext';

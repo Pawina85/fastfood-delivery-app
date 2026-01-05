@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
+import { useUser } from './useClerkSafe';
 import { useUserProfile } from './UserContext';
 import { useCart } from './CartContext';
 import Card from './Card';

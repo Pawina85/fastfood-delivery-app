@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useUser } from './useClerkSafe';
 import { useCart, Order } from './CartContext';
 import { useUserProfile } from './UserContext';
 import Button from './Button';
