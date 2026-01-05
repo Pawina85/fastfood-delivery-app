@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useUser } from './useClerkSafe';
 import { CartItem } from './CartContext';
 
 // Types
