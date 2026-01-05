@@ -5,7 +5,7 @@ import Input from './Input';
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-orange-50 to-orange-100 py-16 md:py-24">
+    <section className="relative bg-gradient-to-br from-white-50 to-light-100 py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           {/* Heading */}
@@ -14,12 +14,20 @@ export default function Hero() {
             <span className="block text-orange-500">Delivered to You</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Order from your favorite restaurants and get fresh, hot food delivered right to your doorstep in minutes.
           </p>
 
+          {/* Delivery Promise Badge */}
+          <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-700 px-5 py-2.5 rounded-full mb-10 border border-orange-200">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span className="font-medium text-sm">Delivered in 30 minutes or less</span>
+          </div>
+
           {/* Search Box */}
-          <div className="bg-white rounded-full shadow-xl p-2 flex flex-col sm:flex-row gap-2 max-w-3xl mx-auto">
+          <div className="bg-white rounded-full shadow-xl p-2 flex flex-col sm:flex-row gap-2 max-w-3xl mx-auto mb-16">
             <div className="flex-1">
               <Input
                 placeholder="Enter your delivery address"
