@@ -2,12 +2,15 @@
 
 import Button from './Button';
 import Input from './Input';
+import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-white-50 to-light-100 py-16 md:py-24">
+    <section className="relative bg-gradient-to-br from-white-50 to-light-100 py-16 md:py-24 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+          {/* Content */}
+          <div className="text-center lg:text-left order-2 lg:order-1">
           {/* Heading */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Delicious Food
@@ -27,7 +30,7 @@ export default function Hero() {
           </div>
 
           {/* Search Box */}
-          <div className="bg-white rounded-full shadow-xl p-2 flex flex-col sm:flex-row gap-2 max-w-3xl mx-auto mb-16">
+          <div className="bg-white rounded-full shadow-xl p-2 flex flex-col sm:flex-row gap-2 max-w-3xl mx-auto lg:mx-0 mb-16">
             <div className="flex-1">
               <Input
                 placeholder="Enter your delivery address"
@@ -46,18 +49,43 @@ export default function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 max-w-2xl mx-auto">
-            <div className="text-center">
+          <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 max-w-2xl mx-auto lg:mx-0">
+            <div className="text-center lg:text-left">
               <div className="text-3xl md:text-4xl font-bold text-orange-500">200+</div>
               <div className="text-sm md:text-base text-gray-600 mt-1">Restaurants</div>
             </div>
-            <div className="text-center border-x border-gray-300">
+            <div className="text-center lg:text-left lg:border-l lg:border-r lg:border-y-0 border-x border-gray-300 lg:px-4">
               <div className="text-3xl md:text-4xl font-bold text-orange-500">5000+</div>
               <div className="text-sm md:text-base text-gray-600 mt-1">Dishes</div>
             </div>
-            <div className="text-center">
+            <div className="text-center lg:text-left">
               <div className="text-3xl md:text-4xl font-bold text-orange-500">30min</div>
               <div className="text-sm md:text-base text-gray-600 mt-1">Avg Delivery</div>
+            </div>
+          </div>
+          </div>
+
+          {/* Image */}
+          <div className="relative order-1 lg:order-2">
+            <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src="/Image/png1.jpg"
+                alt="Delicious food delivery"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+                className="object-cover object-center"
+                priority
+              />
+              {/* Image overlay for better text contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+            </div>
+            
+            {/* Floating badge on image */}
+            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium text-gray-900">Fast Delivery</span>
+              </div>
             </div>
           </div>
         </div>
