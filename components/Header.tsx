@@ -12,6 +12,8 @@ import UserProfileModal from './UserProfileModal';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { totalItems, openCart } = useCart();
   const { isSignedIn, isLoaded } = useUser();
   const { openProfileModal } = useUserProfile();
@@ -48,6 +50,16 @@ export default function Header() {
 
           {/* Cart & Auth */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Search Button */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 text-gray-700 hover:text-orange-500 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+
             {/* Cart Button */}
             <button
               onClick={openCart}
@@ -114,14 +126,30 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <div className="flex flex-col space-y-4">
+              {/* Mobile Search Bar */}
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search restaurants, dishes..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-xl border-0 focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-gray-900 placeholder-gray-500 text-sm"
+                />
+              </div>
+
               <a href="#" className="text-gray-700 hover:text-orange-500 font-medium">
                 Home
               </a>
               <a href="#restaurants" className="text-gray-700 hover:text-orange-500 font-medium">
                 Restaurants
               </a>
-              <a href="#categories" className="text-gray-700 hover:text-orange-500 font-medium">
-                Categories
+              <a href="#" className="text-gray-700 hover:text-orange-500 font-medium">
+                My Orders
               </a>
               <a href="#about" className="text-gray-700 hover:text-orange-500 font-medium">
                 About
@@ -171,6 +199,58 @@ export default function Header() {
       <CheckoutModal />
       <OrderConfirmationModal />
       <UserProfileModal />
+
+      {/* Search Modal */}
+      {searchOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setSearchOpen(false)}
+          />
+          <div className="relative min-h-screen flex items-start justify-center pt-20 px-4">
+            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6">
+              <div className="flex items-center gap-4">
+                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search restaurants, dishes, cuisines..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 text-lg border-0 focus:ring-0 focus:outline-none placeholder-gray-400 text-gray-900"
+                  autoFocus
+                />
+                <button
+                  onClick={() => setSearchOpen(false)}
+                  className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="mt-6 pt-6 border-t">
+                <p className="text-sm text-gray-500 mb-3">Popular searches</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Pizza', 'Burgers', 'Sushi', 'Desserts', 'Drinks'].map((item) => (
+                    <button
+                      key={item}
+                      className="px-4 py-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-full text-sm font-medium transition-colors"
+                      onClick={() => {
+                        setSearchQuery(item);
+                        setSearchOpen(false);
+                      }}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

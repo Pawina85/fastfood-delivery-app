@@ -9,7 +9,7 @@ const categories = [
   { id: 'sushi', name: 'Sushi', icon: '🍣' },
   { id: 'desserts', name: 'Desserts', icon: '🍰' },
   { id: 'drinks', name: 'Drinks', icon: '🥤' },
-  { id: 'fast-food', name: 'Fast Food', icon: '🌭' },
+  { id: 'fast-food', name: 'Combos', icon: '🌭' },
 ];
 
 export default function Categories() {
@@ -22,12 +22,12 @@ export default function Categories() {
           What are you craving?
         </h2>
         
-        <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+        <div className="flex md:flex-wrap md:justify-center gap-3 md:gap-4 overflow-x-auto pb-2 md:pb-0 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
                 activeCategory === category.id
                   ? 'bg-orange-500 text-white shadow-lg scale-105'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
