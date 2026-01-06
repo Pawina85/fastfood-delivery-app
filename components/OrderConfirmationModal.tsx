@@ -11,10 +11,10 @@ export default function OrderConfirmationModal() {
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" />
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]" />
 
       {/* Modal */}
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+      <div className="fixed inset-0 flex items-center justify-center z-[70] p-4">
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
           {/* Success Animation */}
           <div className="bg-gradient-to-br from-green-400 to-green-500 p-8 text-center">
@@ -65,10 +65,11 @@ export default function OrderConfirmationModal() {
               <p className="text-sm text-gray-500 mb-2">Order Summary</p>
               <div className="space-y-1">
                 {currentOrder.items.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <span className="text-gray-600">
-                      {item.image} {item.itemName} x {item.quantity}
-                    </span>
+                  <div key={item.id} className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <img src={item.image} alt={item.itemName} className="w-8 h-8 rounded object-cover" />
+                      <span className="text-gray-600">{item.itemName} x {item.quantity}</span>
+                    </div>
                     <span className="text-gray-900">
                       ${(item.price * item.quantity).toFixed(2)}
                     </span>
