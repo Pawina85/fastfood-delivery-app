@@ -1,146 +1,26 @@
 'use client';
 
+import Link from 'next/link';
 import { useCart } from './CartContext';
 import { useCategory } from './CategoryContext';
-
-interface MenuItem {
-  name: string;
-  price: number;
-  image: string;
-}
-
-interface Restaurant {
-  id: number;
-  name: string;
-  cuisine: string;
-  category: string;
-  rating: number;
-  deliveryTime: string;
-  minOrder: string;
-  image: string;
-  menuItems: MenuItem[];
-}
-
-const restaurants: Restaurant[] = [
-  {
-    id: 1,
-    name: "Pizza Planet",
-    cuisine: "Pizza",
-    category: "pizza",
-    rating: 4.8,
-    deliveryTime: "20-30 min",
-    minOrder: "$15",
-    image: "/Image/margherita.jpg",
-    menuItems: [
-      { name: "Margherita", price: 12.99, image: "/Image/margherita.jpg" },
-      { name: "Pepperoni", price: 14.99, image: "/Image/pizzaslice.jpg" },
-      { name: "BBQ Chicken", price: 15.99, image: "/Image/BBQChicken.jpg" },
-      { name: "Veggie Supreme", price: 13.99, image: "/Image/VeggieSupreme.jpg" },
-      { name: "Garlic Bread", price: 5.99, image: "/Image/GarlicBread.jpg" },
-      { name: "Cheese Sticks", price: 7.99, image: "/Image/CheeseSticks.jpg" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Burger Barn",
-    cuisine: "Burgers",
-    category: "burgers",
-    rating: 4.6,
-    deliveryTime: "15-25 min",
-    minOrder: "$12",
-    image: "/Image/burger.jpg",
-    menuItems: [
-      { name: "Classic Burger", price: 10.99, image: "/Image/burger.jpg" },
-      { name: "Bacon Cheeseburger", price: 12.99, image: "/Image/cheeseburger.jpg" },
-      { name: "Mushroom Swiss", price: 13.99, image: "/Image/ MushroomSwiss.jpg" },
-      { name: "Chicken Burger", price: 11.99, image: "/Image/ChickenBurger.jpg" },
-      { name: "Fries", price: 4.99, image: "/Image/Fries.jpg" },
-      { name: "Onion Rings", price: 5.99, image: "/Image/OnionRings.jpg" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Sushi Studio",
-    cuisine: "Sushi",
-    category: "sushi",
-    rating: 4.9,
-    deliveryTime: "30-40 min",
-    minOrder: "$20",
-    image: "/Image/salmonsushi.jpg",
-    menuItems: [
-      { name: "Salmon Nigiri", price: 14.99, image: "/Image/salmonsushi.jpg" },
-      { name: "California Roll", price: 12.99, image: "/Image/sushiroll.jpg" },
-      { name: "Spicy Tuna Roll", price: 15.99, image: "/Image/SpicyTunaRoll.jpg" },
-      { name: "Edamame", price: 5.99, image: "/Image/Edamame.jpg" },
-      { name: "Miso Soup", price: 4.99, image: "/Image/MisoSoup.jpg" },
-      { name: "Dragon Roll", price: 18.99, image: "/Image/dragon.jpg" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Sweet Spot",
-    cuisine: "Desserts",
-    category: "desserts",
-    rating: 4.7,
-    deliveryTime: "20-30 min",
-    minOrder: "$10",
-    image: "/Image/chocolatecake.jpg",
-    menuItems: [
-      { name: "Chocolate Cake", price: 7.99, image: "/Image/chocolatecake.jpg" },
-      { name: "Cheesecake", price: 8.99, image: "/Image/Chesscake.jpg" },
-      { name: "Brownie", price: 5.99, image: "/Image/Brownnie.jpg" },
-      { name: "Ice Cream Sundae", price: 6.99, image: "/Image/IceCreamSunda.jpg" },
-      { name: "Tiramisu", price: 9.99, image: "/Image/Tiramisu.jpg" },
-      { name: "Cookies", price: 4.99, image: "/Image/Cookies.jpg" },
-    ],
-  },
-  {
-    id: 5,
-    name: "Shake Shack Jr",
-    cuisine: "Drinks & Sides",
-    category: "drinks",
-    rating: 4.5,
-    deliveryTime: "10-20 min",
-    minOrder: "$8",
-    image: "/Image/Milkshake.jpg",
-    menuItems: [
-      { name: "Milkshake", price: 6.99, image: "/Image/Milkshake.jpg" },
-      { name: "Smoothie", price: 7.99, image: "/Image/ Smoothie.jpg" },
-      { name: "Iced Coffee", price: 4.99, image: "/Image/IcedCoffee.jpg" },
-      { name: "Lemonade", price: 3.99, image: "/Image/Lemonade.jpg" },
-      { name: "Soda", price: 2.99, image: "/Image/Soda.jpg" },
-      { name: "Fries", price: 4.99, image: "/Image/Fries.jpg" },
-    ],
-  },
-  {
-    id: 6,
-    name: "Fast Bites",
-    cuisine: "Mixed Fast Food",
-    category: "fast-food",
-    rating: 4.4,
-    deliveryTime: "15-25 min",
-    minOrder: "$10",
-    image: "/Image/HotDog.jpg",
-    menuItems: [
-      { name: "Hot Dog", price: 5.99, image: "/Image/HotDog.jpg" },
-      { name: "Chicken Wrap", price: 8.99, image: "/Image/ChickenWrap.jpg" },
-      { name: "Nachos", price: 7.99, image: "/Image/Nachos.jpg" },
-      { name: "Wings", price: 10.99, image: "/Image/Wings.jpg" },
-      { name: "Mozzarella Sticks", price: 6.99, image: "/Image/MozzarellaSticks.jpg" },
-      { name: "Combo Meal", price: 12.99, image: "/Image/ComboMeal.jpg" },
-    ],
-  },
-];
+import { restaurants, Restaurant, MenuItem } from './searchData';
 
 export default function RestaurantGrid() {
-  const { addItem, openCart } = useCart();
+  const { items, addItem, updateQuantity, totalItems, totalPrice, openCart } = useCart();
   const { activeCategory } = useCategory();
 
   const filteredRestaurants = activeCategory === 'all'
     ? restaurants
     : restaurants.filter(restaurant => restaurant.category === activeCategory);
 
-  const handleOrderNow = (restaurant: Restaurant, item: MenuItem) => {
+  const getItemQuantity = (restaurantId: number, itemName: string) => {
+    const cartItem = items.find(item => item.id === `${restaurantId}-${itemName}`);
+    return cartItem?.quantity || 0;
+  };
+
+  const handleAddItem = (e: React.MouseEvent, restaurant: Restaurant, item: MenuItem) => {
+    e.preventDefault();
+    e.stopPropagation();
     addItem({
       id: `${restaurant.id}-${item.name}`,
       restaurantId: restaurant.id,
@@ -149,11 +29,20 @@ export default function RestaurantGrid() {
       price: item.price,
       image: item.image,
     });
-    openCart();
+  };
+
+  const handleRemoveItem = (e: React.MouseEvent, restaurantId: number, itemName: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const itemId = `${restaurantId}-${itemName}`;
+    const cartItem = items.find(item => item.id === itemId);
+    if (cartItem) {
+      updateQuantity(itemId, cartItem.quantity - 1);
+    }
   };
 
   return (
-    <section className="py-16 bg-gray-50" id="restaurants">
+    <section className="py-16 bg-gray-50 pb-32" id="restaurants">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -167,14 +56,25 @@ export default function RestaurantGrid() {
         <div className="space-y-12">
           {filteredRestaurants.map((restaurant) => (
             <div key={restaurant.id} className="bg-white rounded-xl shadow-md overflow-hidden">
-              {/* Restaurant Header */}
-              <div className="p-6 border-b">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900">{restaurant.name}</h3>
-                    <p className="text-gray-600">{restaurant.cuisine}</p>
-                  </div>
+              {/* Restaurant Header - Clickable link to detail page */}
+              <Link href={`/restaurant/${restaurant.id}`} className="block p-6 border-b hover:bg-gray-50 transition-colors">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                      <img
+                        src={restaurant.image}
+                        alt={restaurant.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 hover:text-orange-500 transition-colors">
+                        {restaurant.name}
+                      </h3>
+                      <p className="text-gray-600">{restaurant.cuisine}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <div className="flex items-center space-x-1 bg-green-100 px-3 py-1 rounded-full">
                       <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -188,36 +88,94 @@ export default function RestaurantGrid() {
                       <span>{restaurant.deliveryTime}</span>
                     </div>
                     <div className="text-sm text-gray-500">Min {restaurant.minOrder}</div>
+                    <svg className="w-5 h-5 text-gray-400 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </div>
                 </div>
-              </div>
+              </Link>
 
               {/* Menu Items Grid */}
               <div className="p-6">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                  {restaurant.menuItems.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group cursor-pointer"
-                      onClick={() => handleOrderNow(restaurant, item)}
-                    >
-                      <div className="aspect-square rounded-lg overflow-hidden mb-2">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
-                        />
+                  {restaurant.menuItems.map((item) => {
+                    const quantity = getItemQuantity(restaurant.id, item.name);
+                    return (
+                      <div
+                        key={item.name}
+                        className="group"
+                      >
+                        <div className="relative aspect-square rounded-lg overflow-hidden mb-2">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
+                          />
+                          {/* Quantity controls */}
+                          <div className="absolute bottom-2 right-2">
+                            {quantity === 0 ? (
+                              <button
+                                onClick={(e) => handleAddItem(e, restaurant, item)}
+                                className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-orange-600 transition-colors hover:scale-110"
+                              >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                              </button>
+                            ) : (
+                              <div className="flex items-center gap-1 bg-white rounded-full shadow-lg p-1">
+                                <button
+                                  onClick={(e) => handleRemoveItem(e, restaurant.id, item.name)}
+                                  className="w-7 h-7 bg-gray-100 text-gray-700 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                                  </svg>
+                                </button>
+                                <span className="w-6 text-center font-semibold text-gray-900 text-sm">{quantity}</span>
+                                <button
+                                  onClick={(e) => handleAddItem(e, restaurant, item)}
+                                  className="w-7 h-7 bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                  </svg>
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <h4 className="font-medium text-gray-900 text-sm truncate">{item.name}</h4>
+                        <p className="text-orange-500 font-semibold text-sm">${item.price.toFixed(2)}</p>
                       </div>
-                      <h4 className="font-medium text-gray-900 text-sm truncate">{item.name}</h4>
-                      <p className="text-orange-500 font-semibold text-sm">${item.price.toFixed(2)}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Sticky Cart Summary Bar */}
+      {totalItems > 0 && (
+        <div className="fixed bottom-20 md:bottom-6 left-0 right-0 z-40 px-4">
+          <div className="max-w-2xl mx-auto">
+            <button
+              onClick={openCart}
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-2xl shadow-xl p-4 flex items-center justify-between transition-all"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="font-bold">{totalItems}</span>
+                </div>
+                <span className="font-semibold">View Cart</span>
+              </div>
+              <span className="font-bold text-lg">${totalPrice.toFixed(2)}</span>
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

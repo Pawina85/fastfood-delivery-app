@@ -10,7 +10,7 @@ import { CategoryProvider } from "@/components/CategoryContext";
 export default function Home() {
   return (
     <CategoryProvider>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white overflow-x-hidden">
         <Header />
         <Hero />
         <Recommendations />

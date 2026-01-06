@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-white-50 to-light-100 py-16 md:py-24 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-white-50 to-light-100 py-16 md:py-24 overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Content */}
