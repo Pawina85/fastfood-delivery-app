@@ -1,7 +1,5 @@
 'use client';
 
-import Card from './Card';
-import Button from './Button';
 import { useCart } from './CartContext';
 import { useCategory } from './CategoryContext';
 
@@ -75,7 +73,7 @@ const restaurants: Restaurant[] = [
       { name: "Spicy Tuna Roll", price: 15.99, image: "/Image/SpicyTunaRoll.jpg" },
       { name: "Edamame", price: 5.99, image: "/Image/Edamame.jpg" },
       { name: "Miso Soup", price: 4.99, image: "/Image/MisoSoup.jpg" },
-      { name: "Dragon Roll", price: 18.99, image: "/Image/sushiroll.jpg" },
+      { name: "Dragon Roll", price: 18.99, image: "/Image/dragon.jpg" },
     ],
   },
   {
@@ -166,62 +164,57 @@ export default function RestaurantGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="space-y-12">
           {filteredRestaurants.map((restaurant) => (
-            <Card key={restaurant.id} hover>
-              <div className="p-6">
-                {/* Restaurant Image */}
-                <div className="w-full h-48 rounded-lg overflow-hidden mb-4">
-                  <img
-                    src={restaurant.image}
-                    alt={restaurant.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Restaurant Info */}
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between">
-                    <h3 className="text-xl font-bold text-gray-900">
-                      {restaurant.name}
-                    </h3>
-                    <div className="flex items-center space-x-1 bg-green-100 px-2 py-1 rounded-full">
+            <div key={restaurant.id} className="bg-white rounded-xl shadow-md overflow-hidden">
+              {/* Restaurant Header */}
+              <div className="p-6 border-b">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">{restaurant.name}</h3>
+                    <p className="text-gray-600">{restaurant.cuisine}</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center space-x-1 bg-green-100 px-3 py-1 rounded-full">
                       <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
-                      <span className="text-sm font-semibold text-green-600">
-                        {restaurant.rating}
-                      </span>
+                      <span className="text-sm font-semibold text-green-600">{restaurant.rating}</span>
                     </div>
-                  </div>
-
-                  <p className="text-gray-600">{restaurant.cuisine}</p>
-
-                  <div className="flex items-center justify-between text-sm text-gray-500 pt-3 border-t">
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center text-sm text-gray-500">
+                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{restaurant.deliveryTime}</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                      <span>Min {restaurant.minOrder}</span>
-                    </div>
+                    <div className="text-sm text-gray-500">Min {restaurant.minOrder}</div>
                   </div>
-
-                  <Button
-                    variant="primary"
-                    className="w-full mt-4"
-                    onClick={() => handleOrderNow(restaurant, restaurant.menuItems[0])}
-                  >
-                    Order Now - ${restaurant.menuItems[0].price.toFixed(2)}
-                  </Button>
                 </div>
               </div>
-            </Card>
+
+              {/* Menu Items Grid */}
+              <div className="p-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {restaurant.menuItems.map((item) => (
+                    <div
+                      key={item.name}
+                      className="group cursor-pointer"
+                      onClick={() => handleOrderNow(restaurant, item)}
+                    >
+                      <div className="aspect-square rounded-lg overflow-hidden mb-2">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
+                        />
+                      </div>
+                      <h4 className="font-medium text-gray-900 text-sm truncate">{item.name}</h4>
+                      <p className="text-orange-500 font-semibold text-sm">${item.price.toFixed(2)}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
