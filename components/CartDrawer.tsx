@@ -102,7 +102,7 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t p-4 space-y-4">
+          <div className="border-t p-4 mb-20 md:mb-0 space-y-4">
             {/* Subtotal */}
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Subtotal</span>
