@@ -5,6 +5,7 @@ import { SignInButton, SignUpButton, UserButton, useUser } from './useClerkSafe'
 import Button from './Button';
 import { useCart } from './CartContext';
 import { useUserProfile } from './UserContext';
+import { useDelivery } from './DeliveryContext';
 import CartDrawer from './CartDrawer';
 import CheckoutModal from './CheckoutModal';
 import OrderConfirmationModal from './OrderConfirmationModal';
@@ -19,6 +20,7 @@ export default function Header() {
   const { totalItems, openCart, addItem } = useCart();
   const { isSignedIn, isLoaded } = useUser();
   const { openProfileModal } = useUserProfile();
+  const { deliveryAddress } = useDelivery();
 
   // Debounce search query for desktop modal
   useEffect(() => {
@@ -78,14 +80,24 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div className="flex items-center">
+          {/* Logo and Delivery Address */}
+          <div className="flex items-center gap-4">
             <a href="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">🍔</span>
               </div>
               <span className="text-2xl font-bold text-gray-900">FastFood</span>
             </a>
+            {/* Delivery Address Badge */}
+            {deliveryAddress && (
+              <div className="hidden md:flex items-center gap-2 bg-orange-50 text-orange-700 px-3 py-1.5 rounded-full border border-orange-200">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span className="text-sm font-medium max-w-[150px] truncate">{deliveryAddress}</span>
+              </div>
+            )}
           </div>
 
           {/* Desktop Navigation */}

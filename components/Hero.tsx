@@ -1,9 +1,57 @@
 'use client';
 
+import { useState, useRef } from 'react';
 import Button from './Button';
 import Image from 'next/image';
+import { useDelivery } from './DeliveryContext';
 
 export default function Hero() {
+  const [address, setAddress] = useState('');
+  const [error, setError] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { setDeliveryAddress, showToastNotification } = useDelivery();
+
+  const handleFindFood = () => {
+    // Trim the address
+    const trimmedAddress = address.trim();
+
+    // Validation
+    if (!trimmedAddress) {
+      setError('Please enter your delivery address');
+      inputRef.current?.focus();
+      return;
+    }
+
+    // Clear any previous error
+    setError('');
+
+    // Save to context (which also saves to localStorage)
+    setDeliveryAddress(trimmedAddress);
+
+    // Show toast notification
+    showToastNotification(`Delivering to: ${trimmedAddress}`);
+
+    // Smooth scroll to restaurants section
+    const restaurantsSection = document.getElementById('restaurants');
+    if (restaurantsSection) {
+      restaurantsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleFindFood();
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.target.value);
+    // Clear error when user starts typing
+    if (error) {
+      setError('');
+    }
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-white-50 to-light-100 py-16 md:py-24 overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,15 +86,25 @@ export default function Hero() {
                 </svg>
               </div>
               <input
+                ref={inputRef}
                 type="text"
+                value={address}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder="Enter your delivery address"
-                className="w-full pl-12 pr-4 py-4 bg-gray-50 rounded-xl border-0 focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-gray-900 placeholder-gray-500"
+                className={`w-full pl-12 pr-4 py-4 bg-gray-50 rounded-xl border-2 focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-gray-900 placeholder-gray-500 ${
+                  error ? 'border-red-500 bg-red-50' : 'border-transparent'
+                }`}
               />
             </div>
-            <Button variant="primary" size="lg" className="sm:w-auto w-full px-8">
+            <Button variant="primary" size="lg" className="sm:w-auto w-full px-8" onClick={handleFindFood}>
               Find Food
             </Button>
           </div>
+          {/* Error Message */}
+          {error && (
+            <p className="text-red-500 text-sm mt-2 max-w-3xl mx-auto lg:mx-0">{error}</p>
+          )}
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 max-w-2xl mx-auto lg:mx-0">
