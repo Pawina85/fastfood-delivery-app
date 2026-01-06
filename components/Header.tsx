@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { SignInButton, SignUpButton, UserButton, useUser } from './useClerkSafe';
 import Button from './Button';
 import { useCart } from './CartContext';
@@ -9,14 +9,70 @@ import CartDrawer from './CartDrawer';
 import CheckoutModal from './CheckoutModal';
 import OrderConfirmationModal from './OrderConfirmationModal';
 import UserProfileModal from './UserProfileModal';
+import { searchAll, getPopularSearches, SearchResult } from './searchData';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { totalItems, openCart } = useCart();
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const { totalItems, openCart, addItem } = useCart();
   const { isSignedIn, isLoaded } = useUser();
   const { openProfileModal } = useUserProfile();
+
+  // Debounce search query for desktop modal
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Immediate search results (for mobile - no debounce)
+  const immediateResults = useMemo(() => {
+    const results = searchAll(searchQuery);
+    console.log('Query:', searchQuery, 'Results:', results);
+    return results;
+  }, [searchQuery]);
+
+  // Debounced search results (for desktop modal)
+  const debouncedResults = useMemo(() => {
+    return searchAll(debouncedQuery);
+  }, [debouncedQuery]);
+
+  // Group immediate results by type (for mobile)
+  const mobileRestaurantResults = immediateResults.filter((r): r is Extract<SearchResult, { type: 'restaurant' }> => r.type === 'restaurant');
+  const mobileDishResults = immediateResults.filter((r): r is Extract<SearchResult, { type: 'dish' }> => r.type === 'dish');
+
+  // Group debounced results by type (for desktop)
+  const restaurantResults = debouncedResults.filter((r): r is Extract<SearchResult, { type: 'restaurant' }> => r.type === 'restaurant');
+  const dishResults = debouncedResults.filter((r): r is Extract<SearchResult, { type: 'dish' }> => r.type === 'dish');
+
+  const handleResultClick = (result: SearchResult) => {
+    if (result.type === 'dish') {
+      addItem({
+        id: `${result.restaurantId}-${result.name}`,
+        restaurantId: result.restaurantId,
+        restaurantName: result.restaurantName,
+        itemName: result.name,
+        price: result.price,
+        image: result.image,
+      });
+      openCart();
+    }
+    setSearchOpen(false);
+    setSearchQuery('');
+    setMobileMenuOpen(false);
+  };
+
+  const handlePopularSearch = (term: string) => {
+    setSearchQuery(term);
+  };
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchQuery('');
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -137,10 +193,67 @@ export default function Header() {
                   type="text"
                   placeholder="Search restaurants, dishes..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    console.log('Mobile search typing:', val);
+                    if (val === 'test') alert('Search is working!');
+                    setSearchQuery(val);
+                  }}
                   className="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-xl border-0 focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-gray-900 placeholder-gray-500 text-sm"
                 />
               </div>
+
+              {/* Mobile Search Results */}
+              {searchQuery && (
+                <div className="bg-white rounded-xl shadow-lg border max-h-64 overflow-y-auto">
+                  {immediateResults.length === 0 ? (
+                    <div className="p-4 text-center">
+                      <p className="text-gray-500">No results for &quot;{searchQuery}&quot;</p>
+                      <p className="text-sm text-gray-400 mt-1">Try searching for pizza, burger, or sushi</p>
+                    </div>
+                  ) : (
+                    <div className="divide-y">
+                      {mobileRestaurantResults.length > 0 && (
+                        <div className="p-2">
+                          <p className="text-xs font-semibold text-gray-500 px-2 mb-1">Restaurants</p>
+                          {mobileRestaurantResults.slice(0, 3).map((result) => (
+                            <button
+                              key={result.id}
+                              onClick={() => handleResultClick(result)}
+                              className="w-full flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg text-left"
+                            >
+                              <img src={result.image} alt={result.name} className="w-10 h-10 rounded-lg object-cover" />
+                              <div>
+                                <p className="font-medium text-gray-900 text-sm">{result.name}</p>
+                                <p className="text-xs text-gray-500">{result.cuisine} • ⭐ {result.rating}</p>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                      {mobileDishResults.length > 0 && (
+                        <div className="p-2">
+                          <p className="text-xs font-semibold text-gray-500 px-2 mb-1">Dishes</p>
+                          {mobileDishResults.slice(0, 5).map((result, idx) => (
+                            <button
+                              key={`${result.restaurantId}-${result.name}-${idx}`}
+                              onClick={() => handleResultClick(result)}
+                              className="w-full flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg text-left"
+                            >
+                              <img src={result.image} alt={result.name} className="w-10 h-10 rounded-lg object-cover" />
+                              <div className="flex-1">
+                                <p className="font-medium text-gray-900 text-sm">{result.name}</p>
+                                <p className="text-xs text-gray-500">{result.restaurantName}</p>
+                              </div>
+                              <span className="text-orange-500 font-semibold text-sm">${result.price.toFixed(2)}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <a href="#" className="text-gray-700 hover:text-orange-500 font-medium">
                 Home
@@ -207,7 +320,7 @@ export default function Header() {
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setSearchOpen(false)}
+            onClick={closeSearch}
           />
           <div className="relative min-h-screen flex items-start justify-center pt-20 px-4">
             <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6">
@@ -224,7 +337,7 @@ export default function Header() {
                   autoFocus
                 />
                 <button
-                  onClick={() => setSearchOpen(false)}
+                  onClick={closeSearch}
                   className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,23 +345,88 @@ export default function Header() {
                   </svg>
                 </button>
               </div>
-              <div className="mt-6 pt-6 border-t">
-                <p className="text-sm text-gray-500 mb-3">Popular searches</p>
-                <div className="flex flex-wrap gap-2">
-                  {['Pizza', 'Burgers', 'Sushi', 'Desserts', 'Drinks'].map((item) => (
-                    <button
-                      key={item}
-                      className="px-4 py-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-full text-sm font-medium transition-colors"
-                      onClick={() => {
-                        setSearchQuery(item);
-                        setSearchOpen(false);
-                      }}
-                    >
-                      {item}
-                    </button>
-                  ))}
+
+              {/* Search Results */}
+              {debouncedQuery ? (
+                <div className="mt-6 pt-6 border-t max-h-96 overflow-y-auto">
+                  {debouncedResults.length === 0 ? (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500 text-lg">No results for &quot;{debouncedQuery}&quot;</p>
+                      <p className="text-sm text-gray-400 mt-2">Try searching for pizza, burger, or sushi</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      {/* Restaurant Results */}
+                      {restaurantResults.length > 0 && (
+                        <div>
+                          <h3 className="text-sm font-semibold text-gray-500 mb-3">Restaurants</h3>
+                          <div className="space-y-2">
+                            {restaurantResults.map((result) => (
+                              <button
+                                key={result.id}
+                                onClick={() => handleResultClick(result)}
+                                className="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors text-left"
+                              >
+                                <img
+                                  src={result.image}
+                                  alt={result.name}
+                                  className="w-14 h-14 rounded-xl object-cover"
+                                />
+                                <div>
+                                  <p className="font-semibold text-gray-900">{result.name}</p>
+                                  <p className="text-sm text-gray-500">{result.cuisine} • ⭐ {result.rating}</p>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Dish Results */}
+                      {dishResults.length > 0 && (
+                        <div>
+                          <h3 className="text-sm font-semibold text-gray-500 mb-3">Dishes</h3>
+                          <div className="space-y-2">
+                            {dishResults.map((result, idx) => (
+                              <button
+                                key={`${result.restaurantId}-${result.name}-${idx}`}
+                                onClick={() => handleResultClick(result)}
+                                className="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors text-left"
+                              >
+                                <img
+                                  src={result.image}
+                                  alt={result.name}
+                                  className="w-14 h-14 rounded-xl object-cover"
+                                />
+                                <div className="flex-1">
+                                  <p className="font-semibold text-gray-900">{result.name}</p>
+                                  <p className="text-sm text-gray-500">from {result.restaurantName}</p>
+                                </div>
+                                <span className="text-orange-500 font-bold">${result.price.toFixed(2)}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </div>
+              ) : (
+                <div className="mt-6 pt-6 border-t">
+                  <p className="text-sm text-gray-500 mb-3">Popular searches</p>
+                  <div className="flex flex-wrap gap-2">
+                    {getPopularSearches().map((item) => (
+                      <button
+                        key={item}
+                        className="px-4 py-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-full text-sm font-medium transition-colors"
+                        onClick={() => handlePopularSearch(item)}
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
