@@ -58,7 +58,7 @@ export default function Recommendations() {
   };
 
   return (
-    <section className="py-12 bg-gradient-to-br from-orange-50 to-white">
+    <section className="py-12 bg-gradient-to-br from-orange-50 to-white overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
