@@ -3,99 +3,153 @@
 import Card from './Card';
 import Button from './Button';
 import { useCart } from './CartContext';
+import { useCategory } from './CategoryContext';
+
+interface MenuItem {
+  name: string;
+  price: number;
+  image: string;
+}
 
 interface Restaurant {
   id: number;
   name: string;
   cuisine: string;
+  category: string;
   rating: number;
   deliveryTime: string;
   minOrder: string;
   image: string;
-  popularItem: string;
-  price: number;
+  menuItems: MenuItem[];
 }
 
 const restaurants: Restaurant[] = [
   {
     id: 1,
-    name: "Pizza Paradise",
-    cuisine: "Italian, Pizza",
+    name: "Pizza Planet",
+    cuisine: "Pizza",
+    category: "pizza",
     rating: 4.8,
     deliveryTime: "20-30 min",
     minOrder: "$15",
-    image: "🍕",
-    popularItem: "Margherita Pizza",
-    price: 14.99,
+    image: "/Image/margherita.jpg",
+    menuItems: [
+      { name: "Margherita", price: 12.99, image: "/Image/margherita.jpg" },
+      { name: "Pepperoni", price: 14.99, image: "/Image/pizzaslice.jpg" },
+      { name: "BBQ Chicken", price: 15.99, image: "/Image/BBQChicken.jpg" },
+      { name: "Veggie Supreme", price: 13.99, image: "/Image/VeggieSupreme.jpg" },
+      { name: "Garlic Bread", price: 5.99, image: "/Image/GarlicBread.jpg" },
+      { name: "Cheese Sticks", price: 7.99, image: "/Image/CheeseSticks.jpg" },
+    ],
   },
   {
     id: 2,
-    name: "Burger House",
-    cuisine: "American, Burgers",
+    name: "Burger Barn",
+    cuisine: "Burgers",
+    category: "burgers",
     rating: 4.6,
-    deliveryTime: "25-35 min",
+    deliveryTime: "15-25 min",
     minOrder: "$12",
-    image: "🍔",
-    popularItem: "Classic Cheeseburger",
-    price: 11.99,
+    image: "/Image/burger.jpg",
+    menuItems: [
+      { name: "Classic Burger", price: 10.99, image: "/Image/burger.jpg" },
+      { name: "Bacon Cheeseburger", price: 12.99, image: "/Image/cheeseburger.jpg" },
+      { name: "Mushroom Swiss", price: 13.99, image: "/Image/ MushroomSwiss.jpg" },
+      { name: "Chicken Burger", price: 11.99, image: "/Image/ChickenBurger.jpg" },
+      { name: "Fries", price: 4.99, image: "/Image/Fries.jpg" },
+      { name: "Onion Rings", price: 5.99, image: "/Image/OnionRings.jpg" },
+    ],
   },
   {
     id: 3,
-    name: "Sushi Master",
-    cuisine: "Japanese, Sushi",
+    name: "Sushi Studio",
+    cuisine: "Sushi",
+    category: "sushi",
     rating: 4.9,
     deliveryTime: "30-40 min",
     minOrder: "$20",
-    image: "🍣",
-    popularItem: "Dragon Roll",
-    price: 18.99,
+    image: "/Image/salmonsushi.jpg",
+    menuItems: [
+      { name: "Salmon Nigiri", price: 14.99, image: "/Image/salmonsushi.jpg" },
+      { name: "California Roll", price: 12.99, image: "/Image/sushiroll.jpg" },
+      { name: "Spicy Tuna Roll", price: 15.99, image: "/Image/SpicyTunaRoll.jpg" },
+      { name: "Edamame", price: 5.99, image: "/Image/Edamame.jpg" },
+      { name: "Miso Soup", price: 4.99, image: "/Image/MisoSoup.jpg" },
+      { name: "Dragon Roll", price: 18.99, image: "/Image/sushiroll.jpg" },
+    ],
   },
   {
     id: 4,
-    name: "Taco Fiesta",
-    cuisine: "Mexican, Tacos",
+    name: "Sweet Spot",
+    cuisine: "Desserts",
+    category: "desserts",
     rating: 4.7,
-    deliveryTime: "15-25 min",
+    deliveryTime: "20-30 min",
     minOrder: "$10",
-    image: "🌮",
-    popularItem: "Carne Asada Tacos",
-    price: 9.99,
+    image: "/Image/chocolatecake.jpg",
+    menuItems: [
+      { name: "Chocolate Cake", price: 7.99, image: "/Image/chocolatecake.jpg" },
+      { name: "Cheesecake", price: 8.99, image: "/Image/Chesscake.jpg" },
+      { name: "Brownie", price: 5.99, image: "/Image/Brownnie.jpg" },
+      { name: "Ice Cream Sundae", price: 6.99, image: "/Image/IceCreamSunda.jpg" },
+      { name: "Tiramisu", price: 9.99, image: "/Image/Tiramisu.jpg" },
+      { name: "Cookies", price: 4.99, image: "/Image/Cookies.jpg" },
+    ],
   },
   {
     id: 5,
-    name: "Noodle House",
-    cuisine: "Asian, Noodles",
+    name: "Shake Shack Jr",
+    cuisine: "Drinks & Sides",
+    category: "drinks",
     rating: 4.5,
-    deliveryTime: "25-35 min",
-    minOrder: "$12",
-    image: "🍜",
-    popularItem: "Spicy Ramen",
-    price: 12.99,
+    deliveryTime: "10-20 min",
+    minOrder: "$8",
+    image: "/Image/Milkshake.jpg",
+    menuItems: [
+      { name: "Milkshake", price: 6.99, image: "/Image/Milkshake.jpg" },
+      { name: "Smoothie", price: 7.99, image: "/Image/ Smoothie.jpg" },
+      { name: "Iced Coffee", price: 4.99, image: "/Image/IcedCoffee.jpg" },
+      { name: "Lemonade", price: 3.99, image: "/Image/Lemonade.jpg" },
+      { name: "Soda", price: 2.99, image: "/Image/Soda.jpg" },
+      { name: "Fries", price: 4.99, image: "/Image/Fries.jpg" },
+    ],
   },
   {
     id: 6,
-    name: "Sweet Treats",
-    cuisine: "Desserts, Bakery",
-    rating: 4.8,
-    deliveryTime: "20-30 min",
-    minOrder: "$8",
-    image: "🍰",
-    popularItem: "Chocolate Cake",
-    price: 7.99,
+    name: "Fast Bites",
+    cuisine: "Mixed Fast Food",
+    category: "fast-food",
+    rating: 4.4,
+    deliveryTime: "15-25 min",
+    minOrder: "$10",
+    image: "/Image/HotDog.jpg",
+    menuItems: [
+      { name: "Hot Dog", price: 5.99, image: "/Image/HotDog.jpg" },
+      { name: "Chicken Wrap", price: 8.99, image: "/Image/ChickenWrap.jpg" },
+      { name: "Nachos", price: 7.99, image: "/Image/Nachos.jpg" },
+      { name: "Wings", price: 10.99, image: "/Image/Wings.jpg" },
+      { name: "Mozzarella Sticks", price: 6.99, image: "/Image/MozzarellaSticks.jpg" },
+      { name: "Combo Meal", price: 12.99, image: "/Image/ComboMeal.jpg" },
+    ],
   },
 ];
 
 export default function RestaurantGrid() {
   const { addItem, openCart } = useCart();
+  const { activeCategory } = useCategory();
 
-  const handleOrderNow = (restaurant: Restaurant) => {
+  const filteredRestaurants = activeCategory === 'all'
+    ? restaurants
+    : restaurants.filter(restaurant => restaurant.category === activeCategory);
+
+  const handleOrderNow = (restaurant: Restaurant, item: MenuItem) => {
     addItem({
-      id: `${restaurant.id}-${restaurant.popularItem}`,
+      id: `${restaurant.id}-${item.name}`,
       restaurantId: restaurant.id,
       restaurantName: restaurant.name,
-      itemName: restaurant.popularItem,
-      price: restaurant.price,
-      image: restaurant.image,
+      itemName: item.name,
+      price: item.price,
+      image: item.image,
     });
     openCart();
   };
@@ -113,12 +167,16 @@ export default function RestaurantGrid() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {restaurants.map((restaurant) => (
+          {filteredRestaurants.map((restaurant) => (
             <Card key={restaurant.id} hover>
               <div className="p-6">
-                {/* Restaurant Image/Icon */}
-                <div className="w-full h-48 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-8xl">{restaurant.image}</span>
+                {/* Restaurant Image */}
+                <div className="w-full h-48 rounded-lg overflow-hidden mb-4">
+                  <img
+                    src={restaurant.image}
+                    alt={restaurant.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
 
                 {/* Restaurant Info */}
@@ -157,9 +215,9 @@ export default function RestaurantGrid() {
                   <Button
                     variant="primary"
                     className="w-full mt-4"
-                    onClick={() => handleOrderNow(restaurant)}
+                    onClick={() => handleOrderNow(restaurant, restaurant.menuItems[0])}
                   >
-                    Order Now - ${restaurant.price.toFixed(2)}
+                    Order Now - ${restaurant.menuItems[0].price.toFixed(2)}
                   </Button>
                 </div>
               </div>

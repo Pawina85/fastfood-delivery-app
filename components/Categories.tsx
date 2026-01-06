@@ -1,18 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useCategory } from './CategoryContext';
 
 const categories = [
   { id: 'all', name: 'All', icon: '🍽️' },
   { id: 'pizza', name: 'Pizza', icon: '🍕' },
-  { id: 'burger', name: 'Burgers', icon: '🍔' },
+  { id: 'burgers', name: 'Burgers', icon: '🍔' },
   { id: 'sushi', name: 'Sushi', icon: '🍣' },
-  { id: 'dessert', name: 'Desserts', icon: '🍰' },
+  { id: 'desserts', name: 'Desserts', icon: '🍰' },
   { id: 'drinks', name: 'Drinks', icon: '🥤' },
+  { id: 'fast-food', name: 'Fast Food', icon: '🌭' },
 ];
 
 export default function Categories() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const { activeCategory, setActiveCategory } = useCategory();
 
   return (
     <section className="py-12 bg-white" id="categories">
