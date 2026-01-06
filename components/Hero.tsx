@@ -1,7 +1,6 @@
 'use client';
 
 import Button from './Button';
-import Input from './Input';
 import Image from 'next/image';
 
 export default function Hero() {
@@ -13,12 +12,12 @@ export default function Hero() {
           <div className="text-center lg:text-left order-2 lg:order-1">
           {/* Heading */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Delicious Food
-            <span className="block text-orange-500">Delivered to You</span>
+            Craving Fast Food?
+            <span className="block text-orange-500">We Got You Covered</span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Order from your favorite restaurants and get fresh, hot food delivered right to your doorstep in minutes.
+            Burgers, pizza, sushi & more — fresh and hot, delivered to your door in 30 minutes or less.
           </p>
 
           {/* Delivery Promise Badge */}
@@ -30,20 +29,21 @@ export default function Hero() {
           </div>
 
           {/* Search Box */}
-          <div className="bg-white rounded-full shadow-xl p-2 flex flex-col sm:flex-row gap-2 max-w-3xl mx-auto lg:mx-0 mb-16">
-            <div className="flex-1">
-              <Input
+          <div className="bg-white rounded-2xl shadow-2xl p-3 flex flex-col sm:flex-row gap-3 max-w-3xl mx-auto lg:mx-0 mb-16 border border-gray-100">
+            <div className="flex-1 relative">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
                 placeholder="Enter your delivery address"
-                className="border-0 shadow-none"
-                icon={
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                }
+                className="w-full pl-12 pr-4 py-4 bg-gray-50 rounded-xl border-0 focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-gray-900 placeholder-gray-500"
               />
             </div>
-            <Button variant="primary" size="lg" className="sm:w-auto w-full">
+            <Button variant="primary" size="lg" className="sm:w-auto w-full px-8">
               Find Food
             </Button>
           </div>
@@ -67,7 +67,7 @@ export default function Hero() {
 
           {/* Image */}
           <div className="relative order-1 lg:order-2">
-            <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative w-full h-[280px] sm:h-[350px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src="/Image/png1.jpg"
                 alt="Delicious food delivery"
