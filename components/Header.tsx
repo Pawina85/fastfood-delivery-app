@@ -77,7 +77,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+   <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo and Delivery Address */}
@@ -273,7 +273,7 @@ export default function Header() {
               <a href="#restaurants" className="text-gray-700 hover:text-orange-500 font-medium">
                 Restaurants
               </a>
-              <a href="#" className="text-gray-700 hover:text-orange-500 font-medium">
+              <a href="/orders" className="text-gray-700 hover:text-orange-500 font-medium">
                 My Orders
               </a>
               <a href="#about" className="text-gray-700 hover:text-orange-500 font-medium">

@@ -5,6 +5,7 @@ import ClerkProviderWrapper from "@/components/ClerkProviderWrapper";
 import { CartProvider } from "@/components/CartContext";
 import { UserProvider } from "@/components/UserContext";
 import { DeliveryProvider } from "@/components/DeliveryContext";
+import { OrdersProvider } from "@/components/OrdersContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,9 @@ export default function RootLayout({
           <CartProvider>
             <UserProvider>
               <DeliveryProvider>
-                {children}
+                <OrdersProvider>
+                  {children}
+                </OrdersProvider>
               </DeliveryProvider>
             </UserProvider>
           </CartProvider>

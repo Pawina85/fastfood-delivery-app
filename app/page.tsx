@@ -6,19 +6,21 @@ import Recommendations from "@/components/Recommendations";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 import { CategoryProvider } from "@/components/CategoryContext";
+import PromoBanner from "@/components/PromoBanner";
 
 export default function Home() {
   return (
     <CategoryProvider>
-      <div className="min-h-screen bg-white overflow-x-hidden">
         <Header />
+        <main className="min-h-screen bg-white pt-16 md:pt-20">
+        <PromoBanner />
         <Hero />
         <Recommendations />
         <Categories />
         <RestaurantGrid />
         <About />
         <Footer />
-      </div>
+      </main>
     </CategoryProvider>
   );
 }
