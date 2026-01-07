@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useUser } from './useClerkSafe';
 import { useCart, Order } from './CartContext';
 import { useUserProfile } from './UserContext';
+import { useOrders, cartItemsToOrderItems } from './OrdersContext';
 import Button from './Button';
 import Input from './Input';
 
@@ -19,6 +20,7 @@ export default function CheckoutModal() {
 
   const { isSignedIn } = useUser();
   const { profile, getDefaultAddress, getDefaultPaymentMethod, addToOrderHistory } = useUserProfile();
+  const { addOrder } = useOrders();
 
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
@@ -81,6 +83,22 @@ export default function CheckoutModal() {
         status: 'preparing',
         deliveryAddress,
         restaurantName: items[0].restaurantName,
+      });
+    }
+
+    // Save to OrdersContext with localStorage persistence
+    if (items.length > 0) {
+      addOrder({
+        restaurantId: items[0].restaurantId,
+        restaurantName: items[0].restaurantName,
+        restaurantImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400',
+        items: cartItemsToOrderItems(items),
+        subtotal: totalPrice,
+        deliveryFee,
+        total,
+        deliveryAddress,
+        status: 'preparing',
+        estimatedDelivery: '25-35 min',
       });
     }
 
