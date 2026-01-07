@@ -159,7 +159,7 @@ export default function RestaurantGrid() {
 
       {/* Sticky Cart Summary Bar */}
       {totalItems > 0 && (
-        <div className="fixed bottom-20 md:bottom-6 left-0 right-0 z-40 px-4">
+        <div className="fixed bottom-6 left-0 right-0 z-40 px-4">
           <div className="max-w-2xl mx-auto">
             <button
               onClick={openCart}
