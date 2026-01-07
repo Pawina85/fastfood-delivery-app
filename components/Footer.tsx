@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12 pb-24 md:pb-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
         {/* Mobile Layout */}
         <div className="md:hidden">
           {/* Logo + Description */}
