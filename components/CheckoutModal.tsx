@@ -118,9 +118,9 @@ export default function CheckoutModal() {
         onClick={closeCheckout}
       />
 
-      {/* Modal */}
+      {/* Modal - using dvh to prevent keyboard push */}
       <div className="fixed inset-0 flex items-center justify-center z-[70] p-4">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85dvh] overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-white rounded-t-2xl">
             <button

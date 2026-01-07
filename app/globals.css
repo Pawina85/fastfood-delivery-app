@@ -79,3 +79,31 @@ body {
 .animate-slide-down {
   animation: slide-down 0.4s ease-out;
 }
+
+/* Fix for mobile keyboard pushing fixed elements */
+@supports (height: 100dvh) {
+  .h-dvh {
+    height: 100dvh;
+  }
+}
+
+/* Prevent iOS keyboard from pushing content */
+html, body {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fixed bottom elements should not move with keyboard */
+.fixed-bottom-safe {
+  position: fixed;
+  bottom: 0;
+  bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* For iOS Safari - prevent viewport resize on keyboard */
+@supports (-webkit-touch-callout: none) {
+  body {
+    height: -webkit-fill-available;
+  }
+}
