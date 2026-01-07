@@ -45,8 +45,8 @@ export default function CartDrawer() {
         onClick={closeCart}
       />
 
-      {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-2xl z-[70] overflow-y-auto transform transition-transform duration-300">
+      {/* Drawer - using max-h-screen and overflow to prevent keyboard push */}
+      <div className="fixed right-0 top-0 h-[100dvh] w-full sm:w-96 bg-white shadow-2xl z-[70] overflow-y-auto transform transition-transform duration-300">
         {/* Header */}
         <div className="sticky top-0 bg-white z-10 flex items-center justify-between p-4 border-b">
           <h2 className="text-xl font-bold text-gray-900">
