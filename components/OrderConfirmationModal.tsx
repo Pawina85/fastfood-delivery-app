@@ -71,14 +71,14 @@ export default function OrderConfirmationModal() {
                       <span className="text-gray-600">{item.itemName} x {item.quantity}</span>
                     </div>
                     <span className="text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ฿{(item.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}
               </div>
               <div className="flex justify-between mt-3 pt-3 border-t">
                 <span className="font-bold text-gray-900">Total Paid</span>
-                <span className="font-bold text-orange-500">${currentOrder.totalPrice.toFixed(2)}</span>
+                <span className="font-bold text-orange-500">฿{currentOrder.totalPrice.toFixed(2)}</span>
               </div>
             </div>
           </div>

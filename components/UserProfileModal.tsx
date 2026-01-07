@@ -285,13 +285,13 @@ export default function UserProfileModal() {
                         {order.items.map((item) => (
                           <div key={item.id} className="flex justify-between">
                             <span>{item.image} {item.itemName} x {item.quantity}</span>
-                            <span>${(item.price * item.quantity).toFixed(2)}</span>
+                            <span>฿{(item.price * item.quantity).toFixed(2)}</span>
                           </div>
                         ))}
                       </div>
                       <div className="flex justify-between mt-3 pt-3 border-t">
                         <span className="font-semibold text-gray-900">Total</span>
-                        <span className="font-bold text-orange-500">${order.total.toFixed(2)}</span>
+                        <span className="font-bold text-orange-500">฿{order.total.toFixed(2)}</span>
                       </div>
                       <Button variant="outline" size="sm" className="w-full mt-3">
                         Reorder

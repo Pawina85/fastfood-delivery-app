@@ -98,7 +98,7 @@ export default function CartDrawer() {
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-gray-900 truncate">{item.itemName}</h3>
                     <p className="text-sm text-gray-500">{item.restaurantName}</p>
-                    <p className="text-orange-500 font-bold mt-1">${item.price.toFixed(2)}</p>
+                    <p className="text-orange-500 font-bold mt-1">฿{item.price.toFixed(2)}</p>
                   </div>
 
                   {/* Quantity Controls */}
@@ -195,21 +195,21 @@ export default function CartDrawer() {
             <div className="space-y-2 pt-2">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="font-medium text-gray-900">${totalPrice.toFixed(2)}</span>
+                <span className="font-medium text-gray-900">฿{totalPrice.toFixed(2)}</span>
               </div>
               {promoApplied && (
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-green-600">Discount (10%)</span>
-                  <span className="font-medium text-green-600">-${discount.toFixed(2)}</span>
+                  <span className="font-medium text-green-600">-฿{discount.toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-600">Delivery Fee</span>
-                <span className="font-medium text-gray-900">${deliveryFee.toFixed(2)}</span>
+                <span className="font-medium text-gray-900">฿{deliveryFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center pt-2 border-t">
                 <span className="text-lg font-bold text-gray-900">Total</span>
-                <span className="text-lg font-bold text-orange-500">${finalTotal.toFixed(2)}</span>
+                <span className="text-lg font-bold text-orange-500">฿{finalTotal.toFixed(2)}</span>
               </div>
             </div>
 

@@ -146,7 +146,7 @@ export default function RestaurantGrid() {
                           </div>
                         </div>
                         <h4 className="font-medium text-gray-900 text-sm truncate">{item.name}</h4>
-                        <p className="text-orange-500 font-semibold text-sm">${item.price.toFixed(2)}</p>
+                        <p className="text-orange-500 font-semibold text-sm">฿{item.price.toFixed(2)}</p>
                       </div>
                     );
                   })}
@@ -171,7 +171,7 @@ export default function RestaurantGrid() {
                 </div>
                 <span className="font-semibold">View Cart</span>
               </div>
-              <span className="font-bold text-lg">${totalPrice.toFixed(2)}</span>
+              <span className="font-bold text-lg">฿{totalPrice.toFixed(2)}</span>
             </button>
           </div>
         </div>

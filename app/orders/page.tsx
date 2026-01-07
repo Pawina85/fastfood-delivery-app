@@ -105,7 +105,7 @@ function OrderCard({ order }: { order: Order }) {
       <div className="p-4">
         <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
           <span>{order.items.reduce((sum, item) => sum + item.quantity, 0)} items</span>
-          <span className="font-semibold text-gray-900">${order.total.toFixed(2)}</span>
+          <span className="font-semibold text-gray-900">฿{order.total.toFixed(2)}</span>
         </div>
 
         {/* Items Preview */}
