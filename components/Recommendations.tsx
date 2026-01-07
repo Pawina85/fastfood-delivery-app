@@ -112,7 +112,7 @@ export default function Recommendations() {
                     size="sm"
                     onClick={() => handleQuickOrder(restaurant)}
                   >
-                    ${restaurant.price.toFixed(2)}
+                    ฿{restaurant.price.toFixed(2)}
                   </Button>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 const promos = [
   { id: 1, text: "Use code FAST20 for 20% off your first order!", icon: "🎉" },
-  { id: 2, text: "Free delivery on orders over $25", icon: "🔥" },
+  { id: 2, text: "Free delivery on orders over ฿500", icon: "🔥" },
   { id: 3, text: "Limited time: 30% off all burgers!", icon: "⚡" },
 ];
 

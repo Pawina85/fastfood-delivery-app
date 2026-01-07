@@ -305,24 +305,24 @@ export default function CheckoutModal() {
                       {item.itemName} x {item.quantity}
                     </span>
                     <span className="text-gray-900 font-medium">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ฿{(item.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}
                 <div className="border-t pt-2 mt-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="text-gray-900">${totalPrice.toFixed(2)}</span>
+                    <span className="text-gray-900">฿{totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Delivery Fee</span>
-                    <span className="text-gray-900">${deliveryFee.toFixed(2)}</span>
+                    <span className="text-gray-900">฿{deliveryFee.toFixed(2)}</span>
                   </div>
                 </div>
                 <div className="border-t pt-2 mt-2">
                   <div className="flex justify-between">
                     <span className="font-bold text-gray-900">Total</span>
-                    <span className="font-bold text-orange-500">${total.toFixed(2)}</span>
+                    <span className="font-bold text-orange-500">฿{total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -337,7 +337,7 @@ export default function CheckoutModal() {
               className="w-full"
               onClick={handlePlaceOrder}
             >
-              Place Order - ${total.toFixed(2)}
+              Place Order - ฿{total.toFixed(2)}
             </Button>
           </div>
         </div>

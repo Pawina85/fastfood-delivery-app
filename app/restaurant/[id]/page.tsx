@@ -182,7 +182,7 @@ export default function RestaurantDetailPage() {
                     </div>
                     <div className="flex items-center justify-between mt-2">
                       <span className="text-orange-500 font-bold">
-                        ${item.price.toFixed(2)}
+                        ฿{item.price.toFixed(2)}
                       </span>
                       <button
                         onClick={() => handleAddToCart(item)}
@@ -215,7 +215,7 @@ export default function RestaurantDetailPage() {
                 </div>
                 <span className="font-semibold">View Cart</span>
               </div>
-              <span className="font-bold text-lg">${totalPrice.toFixed(2)}</span>
+              <span className="font-bold text-lg">฿{totalPrice.toFixed(2)}</span>
             </button>
           </div>
         </div>
